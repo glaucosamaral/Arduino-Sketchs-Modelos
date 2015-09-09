@@ -1,0 +1,349 @@
+//Definindo pinos dos Botões
+#define btPush 4
+#define btPop 5
+#define btTopo 6
+#define btZera 7
+
+//Definindo pinos dos LED's
+#define ledPin0 13
+#define ledPin1 12
+#define ledPin2 11
+#define ledPin3 10
+#define ledPin4 9
+#define ledPin5 8
+
+//Definindo pino do Buzzer
+#define buzzer 3
+
+//Criando variável para controlar o topo da pilha
+int topo;
+
+void setup()
+{
+  //Setando pinos dos LED's como saída
+  pinMode(ledPin0, OUTPUT);
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
+  pinMode(ledPin3, OUTPUT);
+  pinMode(ledPin4, OUTPUT);
+  pinMode(ledPin5, OUTPUT);
+  
+  //Setando pinos dos Botões como entrada
+  pinMode(btPush, INPUT);
+  pinMode(btPop, INPUT);
+  pinMode(btTopo, INPUT);
+  pinMode(btZera, INPUT);
+  
+  //Setando pino do Buzzer como saída
+  pinMode(buzzer, OUTPUT);
+  
+  //Iniciando a serial com um baud rate de 9600
+  Serial.begin(9600);
+  
+  //Inicializando a pilha
+  topo=-1;
+}
+
+void loop()
+{
+  if(digitalRead(btPush))
+  {
+    push();
+  }
+  if(digitalRead(btPop))
+  {
+    pop();
+  }
+  if(digitalRead(btTopo))
+  {
+    top();
+  }
+  if(digitalRead(btZera))
+  {
+    zera();
+  }
+  delay(150);
+}
+
+void push()
+{
+  if(topo>=5)
+  { 
+    Serial.println("Pilha cheia!");
+    digitalWrite(buzzer, HIGH);
+    delay(500);
+    digitalWrite(buzzer, LOW);
+  } 
+else
+  {
+  Serial.println("Ligou!");
+  if(digitalRead(ledPin0)==LOW)
+  {
+    digitalWrite(ledPin0, HIGH);
+    topo++;
+  }else if(digitalRead(ledPin1)==LOW)
+        {
+          digitalWrite(ledPin1, HIGH);
+          topo++;
+        }else if(digitalRead(ledPin2)==LOW)
+              {
+                digitalWrite(ledPin2, HIGH);
+                topo++;
+              }
+              else if(digitalRead(ledPin3)==LOW)
+                  {
+                    digitalWrite(ledPin3, HIGH);
+                    topo++;
+                  }else if(digitalRead(ledPin4)==LOW)
+                        {
+                          digitalWrite(ledPin4, HIGH);
+                          topo++;
+                        }else if(digitalRead(ledPin5)==LOW)
+                              {
+                                digitalWrite(ledPin5, HIGH);
+                                topo++;
+                              }else {
+                                      Serial.println("Pilha cheia! Remova antes de adicionar!"); 
+                                      
+                                      digitalWrite(buzzer, HIGH);
+                                      delay(500);
+                                      digitalWrite(buzzer, LOW);
+                                    }
+  }
+}
+
+void pop()
+{
+  if(topo==-1){
+                Serial.println("Pilha vazia! Adicione antes de remover!"); 
+                
+                digitalWrite(buzzer, HIGH);
+                delay(500);
+                digitalWrite(buzzer, LOW);
+              } 
+else
+  {
+  Serial.println("Desligou");
+  if(digitalRead(ledPin5)==HIGH)
+  {
+    digitalWrite(ledPin5, LOW);
+    topo--;
+  }else if(digitalRead(ledPin4)==HIGH)
+        {
+          digitalWrite(ledPin4, LOW);
+          topo--;
+        }else if(digitalRead(ledPin3)==HIGH)
+              {
+                digitalWrite(ledPin3, LOW);
+                topo--;
+              }
+              else if(digitalRead(ledPin2)==HIGH)
+                  {
+                    digitalWrite(ledPin2, LOW);
+                    topo--;
+                  }else if(digitalRead(ledPin1)==HIGH)
+                        {
+                          digitalWrite(ledPin1, LOW);
+                          topo--;
+                        }else if(digitalRead(ledPin0)==HIGH)
+                              {
+                                digitalWrite(ledPin0, LOW);
+                                topo--;
+
+                              }else {
+                                      Serial.println("Pilha vazia!");
+                                      
+                                      digitalWrite(buzzer, HIGH);
+                                      delay(500);
+                                      digitalWrite(buzzer, LOW);
+                                    }
+  }
+}
+
+void top()
+{
+  switch(topo)
+  {
+    case 0:
+    {
+      Serial.println("Topo na posicao 0");
+      Serial.println("LED 1 aceso!");
+      
+      for(int i=0; i<4; i++)
+      {
+        digitalWrite(ledPin0, LOW);
+        delay(100);
+        digitalWrite(ledPin0, HIGH);
+        delay(100);
+      }
+      break;
+    }
+    
+    case 1:
+    {
+      
+      Serial.println("Topo na posicao 1");
+      Serial.println("LED 2 aceso!");
+      
+      digitalWrite(ledPin0, LOW);
+      
+      for(int i=0; i<4; i++)
+      {
+        digitalWrite(ledPin1, LOW);
+        delay(100);
+        digitalWrite(ledPin1, HIGH);
+        delay(100);
+      }
+      
+      digitalWrite(ledPin0, HIGH);
+      
+      break;
+    }
+    
+    case 2:
+    {
+      Serial.println("Topo na posicao 2");
+      Serial.println("LED 3 aceso!");
+      
+      digitalWrite(ledPin0, LOW);
+      digitalWrite(ledPin1, LOW);
+      
+      for(int i=0; i<4; i++)
+      {
+        digitalWrite(ledPin2, LOW);
+        delay(100);
+        digitalWrite(ledPin2, HIGH);
+        delay(100);
+      }
+      
+      digitalWrite(ledPin0, HIGH);
+      digitalWrite(ledPin1, HIGH);
+      
+      break;
+    }
+    
+    case 3:
+    {
+      Serial.println("Topo na posicao 3");
+      Serial.println("LED 4 aceso!");
+      
+      digitalWrite(ledPin0, LOW);
+      digitalWrite(ledPin1, LOW);
+      digitalWrite(ledPin2, LOW);
+      
+      for(int i=0; i<4; i++)
+      {
+        digitalWrite(ledPin3, LOW);
+        delay(100);
+        digitalWrite(ledPin3, HIGH);
+        delay(100);
+      }
+      
+      digitalWrite(ledPin0, HIGH);
+      digitalWrite(ledPin1, HIGH);
+      digitalWrite(ledPin2, HIGH);
+      
+      break;
+    }
+    
+    case 4:
+    {
+      Serial.println("Topo na posicao 4");
+      Serial.println("LED 5 aceso!");
+      
+      digitalWrite(ledPin0, LOW);
+      digitalWrite(ledPin1, LOW);
+      digitalWrite(ledPin2, LOW);
+      digitalWrite(ledPin3, LOW);
+      
+      for(int i=0; i<4; i++)
+      {
+        digitalWrite(ledPin4, LOW);
+        delay(100);
+        digitalWrite(ledPin4, HIGH);
+        delay(100);
+      }
+      
+      digitalWrite(ledPin0, HIGH);
+      digitalWrite(ledPin1, HIGH);
+      digitalWrite(ledPin2, HIGH);
+      digitalWrite(ledPin3, HIGH);
+      
+      break;
+    }
+    
+    case 5:
+    {
+      Serial.println("Topo na posicao 5");
+      Serial.println("LED 6 aceso!");
+      
+      digitalWrite(ledPin0, LOW);
+      digitalWrite(ledPin1, LOW);
+      digitalWrite(ledPin2, LOW);
+      digitalWrite(ledPin3, LOW);
+      digitalWrite(ledPin4, LOW);
+      
+      for(int i=0; i<4; i++)
+      {
+        digitalWrite(ledPin5, LOW);
+        delay(100);
+        digitalWrite(ledPin5, HIGH);
+        delay(100);
+      }
+      
+      digitalWrite(ledPin0, HIGH);
+      digitalWrite(ledPin1, HIGH);
+      digitalWrite(ledPin2, HIGH);
+      digitalWrite(ledPin3, HIGH);
+      digitalWrite(ledPin4, HIGH);
+      
+      break;
+    }
+    
+    case -1:
+    {
+      Serial.println("Pilha Vazia! Nao ha o que mostrar!");
+      
+      digitalWrite(buzzer, HIGH);
+      delay(500);
+      digitalWrite(buzzer, LOW);
+      
+      break;
+    }
+  }
+}
+
+void zera()
+{
+  for(int i=0; i<4; i++)
+  {
+    digitalWrite(buzzer, LOW);
+    digitalWrite(ledPin0, LOW);
+    digitalWrite(ledPin1, LOW);
+    digitalWrite(ledPin2, LOW);
+    digitalWrite(ledPin3, LOW);
+    digitalWrite(ledPin4, LOW);
+    digitalWrite(ledPin5, LOW);
+    delay(100);
+    digitalWrite(buzzer, HIGH);
+    digitalWrite(ledPin0, HIGH);
+    digitalWrite(ledPin1, HIGH);
+    digitalWrite(ledPin2, HIGH);
+    digitalWrite(ledPin3, HIGH);
+    digitalWrite(ledPin4, HIGH);
+    digitalWrite(ledPin5, HIGH);
+    delay(100);
+  }
+  
+  digitalWrite(buzzer, LOW);
+  digitalWrite(ledPin0, LOW);
+  digitalWrite(ledPin1, LOW);
+  digitalWrite(ledPin2, LOW);
+  digitalWrite(ledPin3, LOW);
+  digitalWrite(ledPin4, LOW);
+  digitalWrite(ledPin5, LOW);
+  
+  topo=-1;
+  Serial.println("Pilha inicializada com sucesso!");
+  Serial.println("=========================================");
+}
