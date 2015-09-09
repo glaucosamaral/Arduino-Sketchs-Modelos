@@ -68,14 +68,23 @@ void loop()
 
 void push()
 {
-  //Testa se a pilha esta cheia
+  /*
+    Testa se a pilha esta cheia, caso esteja imprime
+    no serial monitor a mensagem abaixo e emite som com
+    o buzzer
+  */
   if(topo>=5)
   { 
     Serial.println("Pilha cheia!");
     digitalWrite(buzzer, HIGH);
     delay(500);
     digitalWrite(buzzer, LOW);
-  } 
+  }
+  /*
+    Caso a pilha não esteja cheia testa qual o último LED
+    aceso e acende o próximo e imprime no serial monitor
+    a palavra "Ligou"
+  */
 else
   {
   Serial.println("Ligou!");
@@ -116,13 +125,24 @@ else
 
 void pop()
 {
+  /*
+    Testa se a pilha esta vazia, caso esteja imprime
+    no serial monitor a mensagem abaixo e emite som com
+    o buzzer
+  */
   if(topo==-1){
                 Serial.println("Pilha vazia! Adicione antes de remover!"); 
                 
                 digitalWrite(buzzer, HIGH);
                 delay(500);
                 digitalWrite(buzzer, LOW);
-              } 
+              }
+              
+  /*
+    Caso a pilha não esteja vazia testa qual o útimo LED
+    aceso e apaga esse LED, e imprime no serial monitor
+    a palavra "Desligou"
+  */
 else
   {
   Serial.println("Desligou");
@@ -164,6 +184,11 @@ else
 
 void top()
 {
+  /*
+    Verifica qual LED é o topo da pilha e imprime no serial monitor
+    juntamente com a impressão o LED correspondente ao topo
+    pisca e os outros se apagam
+  */
   switch(topo)
   {
     case 0:
@@ -302,6 +327,10 @@ void top()
       break;
     }
     
+    /*
+      Se a pilha estiver vazia imprime no serial monitor
+      e emite um som com o buzzer
+    */
     case -1:
     {
       Serial.println("Pilha Vazia! Nao ha o que mostrar!");
@@ -317,6 +346,7 @@ void top()
 
 void zera()
 {
+  //Pisca todos os LED's e emite som com o buzzer
   for(int i=0; i<4; i++)
   {
     digitalWrite(buzzer, LOW);
@@ -337,6 +367,7 @@ void zera()
     delay(100);
   }
   
+  //Desliga todos os LED's e o Buzzer
   digitalWrite(buzzer, LOW);
   digitalWrite(ledPin0, LOW);
   digitalWrite(ledPin1, LOW);
@@ -345,7 +376,12 @@ void zera()
   digitalWrite(ledPin4, LOW);
   digitalWrite(ledPin5, LOW);
   
+  /*
+    Inicializa a pilha e imprime no serial monitor
+    a mensagem abaixo
+  */
   topo=-1;
+  
   Serial.println("Pilha inicializada com sucesso!");
   Serial.println("=========================================");
 }
