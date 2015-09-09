@@ -46,6 +46,7 @@ void setup()
 
 void loop()
 {
+  //Esperando algum dos botões ser pressionado
   if(digitalRead(btPush))
   {
     push();
@@ -67,6 +68,7 @@ void loop()
 
 void push()
 {
+  //Testa se a pilha esta cheia
   if(topo>=5)
   { 
     Serial.println("Pilha cheia!");
