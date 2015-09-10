@@ -1,387 +1,282 @@
-//Definindo pinos dos Botões
 #define btPush 4
 #define btPop 5
 #define btTopo 6
 #define btZera 7
 
-//Definindo pinos dos LED's
-#define ledPin0 13
-#define ledPin1 12
-#define ledPin2 11
-#define ledPin3 10
-#define ledPin4 9
-#define ledPin5 8
+int vet[6] = {13, 12, 11, 10, 9, 8};
 
-//Definindo pino do Buzzer
 #define buzzer 3
-
-//Criando variável para controlar o topo da pilha
-int topo;
 
 void setup()
 {
-  //Setando pinos dos LED's como saída
-  pinMode(ledPin0, OUTPUT);
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  pinMode(ledPin3, OUTPUT);
-  pinMode(ledPin4, OUTPUT);
-  pinMode(ledPin5, OUTPUT);
+  pinMode(vet[0], OUTPUT);
+  pinMode(vet[1], OUTPUT);
+  pinMode(vet[2], OUTPUT);
+  pinMode(vet[3], OUTPUT);
+  pinMode(vet[4], OUTPUT);
+  pinMode(vet[5], OUTPUT);
   
-  //Setando pinos dos Botões como entrada
+  digitalWrite(vet[0], LOW);
+  digitalWrite(vet[1], LOW);
+  digitalWrite(vet[2], LOW);
+  digitalWrite(vet[3], LOW);
+  digitalWrite(vet[4], LOW);
+  digitalWrite(vet[5], LOW);
+
   pinMode(btPush, INPUT);
   pinMode(btPop, INPUT);
   pinMode(btTopo, INPUT);
   pinMode(btZera, INPUT);
-  
-  //Setando pino do Buzzer como saída
+
   pinMode(buzzer, OUTPUT);
   
-  //Iniciando a serial com um baud rate de 9600
-  Serial.begin(9600);
+  digitalWrite(buzzer, LOW);
   
-  //Inicializando a pilha
-  topo=-1;
+  Serial.begin(9600);
 }
 
 void loop()
 {
-  //Esperando algum dos botões ser pressionado
   if(digitalRead(btPush))
   {
     push();
-  }
+  }  
   if(digitalRead(btPop))
   {
     pop();
-  }
+  }  
   if(digitalRead(btTopo))
   {
     top();
-  }
+  }  
   if(digitalRead(btZera))
   {
     zera();
   }
-  delay(150);
+  delay(100);
 }
 
 void push()
 {
-  /*
-    Testa se a pilha esta cheia, caso esteja imprime
-    no serial monitor a mensagem abaixo e emite som com
-    o buzzer
-  */
-  if(topo>=5)
-  { 
-    Serial.println("Pilha cheia!");
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-  }
-  /*
-    Caso a pilha não esteja cheia testa qual o último LED
-    aceso e acende o próximo e imprime no serial monitor
-    a palavra "Ligou"
-  */
-else
+  if(digitalRead(vet[0])==LOW)
   {
-  Serial.println("Ligou!");
-  if(digitalRead(ledPin0)==LOW)
-  {
-    digitalWrite(ledPin0, HIGH);
-    topo++;
-  }else if(digitalRead(ledPin1)==LOW)
+    digitalWrite(vet[0], HIGH);
+    Serial.println("===========================================");
+    Serial.println("Elemento Adicionado!");
+  }else if(digitalRead(vet[1])==LOW)
         {
-          digitalWrite(ledPin1, HIGH);
-          topo++;
-        }else if(digitalRead(ledPin2)==LOW)
+          digitalWrite(vet[1], HIGH);
+          Serial.println("===========================================");
+          Serial.println("Elemento Adicionado!");
+        }else if(digitalRead(vet[2])==LOW)
               {
-                digitalWrite(ledPin2, HIGH);
-                topo++;
-              }
-              else if(digitalRead(ledPin3)==LOW)
-                  {
-                    digitalWrite(ledPin3, HIGH);
-                    topo++;
-                  }else if(digitalRead(ledPin4)==LOW)
-                        {
-                          digitalWrite(ledPin4, HIGH);
-                          topo++;
-                        }else if(digitalRead(ledPin5)==LOW)
-                              {
-                                digitalWrite(ledPin5, HIGH);
-                                topo++;
-                              }else {
-                                      Serial.println("Pilha cheia! Remova antes de adicionar!"); 
-                                      
-                                      digitalWrite(buzzer, HIGH);
-                                      delay(500);
-                                      digitalWrite(buzzer, LOW);
-                                    }
-  }
+                digitalWrite(vet[2], HIGH);
+                Serial.println("===========================================");
+                Serial.println("Elemento Adicionado!");
+              }else if(digitalRead(vet[3])==LOW)
+                    {
+                      digitalWrite(vet[3], HIGH);
+                      Serial.println("===========================================");
+                      Serial.println("Elemento Adicionado!");
+                    }else if(digitalRead(vet[4])==LOW)
+                          {
+                            digitalWrite(vet[4], HIGH);
+                            Serial.println("===========================================");
+                            Serial.println("Elemento Adicionado!");
+
+                          }else if(digitalRead(vet[5])==LOW)
+                                {
+                                  digitalWrite(vet[5], HIGH);
+                                  Serial.println("===========================================");
+                                  Serial.println("Elemento Adicionado!");
+                                }  else
+                                      {
+                                        Serial.println("===========================================");
+                                        Serial.println("Pilha Cheia!");
+                                        digitalWrite(buzzer, HIGH);  
+                                        delay(500);
+                                        digitalWrite(buzzer, LOW);  
+                                      }
 }
 
 void pop()
 {
-  /*
-    Testa se a pilha esta vazia, caso esteja imprime
-    no serial monitor a mensagem abaixo e emite som com
-    o buzzer
-  */
-  if(topo==-1){
-                Serial.println("Pilha vazia! Adicione antes de remover!"); 
-                
-                digitalWrite(buzzer, HIGH);
-                delay(500);
-                digitalWrite(buzzer, LOW);
-              }
-              
-  /*
-    Caso a pilha não esteja vazia testa qual o útimo LED
-    aceso e apaga esse LED, e imprime no serial monitor
-    a palavra "Desligou"
-  */
-else
+  if(digitalRead(vet[5])==HIGH)
   {
-  Serial.println("Desligou");
-  if(digitalRead(ledPin5)==HIGH)
-  {
-    digitalWrite(ledPin5, LOW);
-    topo--;
-  }else if(digitalRead(ledPin4)==HIGH)
+    digitalWrite(vet[5], LOW);
+    Serial.println("===========================================");
+    Serial.println("Elemento Removido!");
+  }else if(digitalRead(vet[4])==HIGH)
         {
-          digitalWrite(ledPin4, LOW);
-          topo--;
-        }else if(digitalRead(ledPin3)==HIGH)
+          digitalWrite(vet[4], LOW);
+          Serial.println("===========================================");
+          Serial.println("Elemento Removido!");
+        }else if(digitalRead(vet[3])==HIGH)
               {
-                digitalWrite(ledPin3, LOW);
-                topo--;
-              }
-              else if(digitalRead(ledPin2)==HIGH)
-                  {
-                    digitalWrite(ledPin2, LOW);
-                    topo--;
-                  }else if(digitalRead(ledPin1)==HIGH)
-                        {
-                          digitalWrite(ledPin1, LOW);
-                          topo--;
-                        }else if(digitalRead(ledPin0)==HIGH)
-                              {
-                                digitalWrite(ledPin0, LOW);
-                                topo--;
-
-                              }else {
-                                      Serial.println("Pilha vazia!");
-                                      
-                                      digitalWrite(buzzer, HIGH);
-                                      delay(500);
-                                      digitalWrite(buzzer, LOW);
-                                    }
-  }
+                digitalWrite(vet[3], LOW);
+                Serial.println("===========================================");
+                Serial.println("Elemento Removido!");
+              }else if(digitalRead(vet[2])==HIGH)
+                    {
+                      digitalWrite(vet[2], LOW);
+                      Serial.println("===========================================");
+                      Serial.println("Elemento Removido!");
+                    }else if(digitalRead(vet[1])==HIGH)
+                          {
+                            digitalWrite(vet[1], LOW);
+                            Serial.println("===========================================");
+                            Serial.println("Elemento Removido!");
+                          }else if(digitalRead(vet[0])==HIGH)
+                                {
+                                  digitalWrite(vet[0], LOW);
+                                  Serial.println("===========================================");
+                                  Serial.println("Elemento Removido!");
+                                }  else
+                                      {
+                                        Serial.println("===========================================");
+                                        Serial.println("Pilha Vazia!");
+                                        digitalWrite(buzzer, HIGH);  
+                                        delay(500);
+                                        digitalWrite(buzzer, LOW);  
+                                      }
 }
 
 void top()
 {
-  /*
-    Verifica qual LED é o topo da pilha e imprime no serial monitor
-    juntamente com a impressão o LED correspondente ao topo
-    pisca e os outros se apagam
-  */
-  switch(topo)
+  if(digitalRead(vet[5])==HIGH)
   {
-    case 0:
+    digitalWrite(vet[0], LOW);
+    digitalWrite(vet[1], LOW);
+    digitalWrite(vet[2], LOW);
+    digitalWrite(vet[3], LOW);
+    digitalWrite(vet[4], LOW);
+    
+    for(int i=0; i<4; i++)
     {
-      Serial.println("Topo na posicao 0");
-      Serial.println("LED 1 aceso!");
-      
-      for(int i=0; i<4; i++)
-      {
-        digitalWrite(ledPin0, LOW);
-        delay(100);
-        digitalWrite(ledPin0, HIGH);
-        delay(100);
-      }
-      break;
+       digitalWrite(vet[5], LOW);
+       delay(100);
+       digitalWrite(vet[5], HIGH);
+       delay(100);
     }
     
-    case 1:
-    {
-      
-      Serial.println("Topo na posicao 1");
-      Serial.println("LED 2 aceso!");
-      
-      digitalWrite(ledPin0, LOW);
-      
-      for(int i=0; i<4; i++)
-      {
-        digitalWrite(ledPin1, LOW);
-        delay(100);
-        digitalWrite(ledPin1, HIGH);
-        delay(100);
-      }
-      
-      digitalWrite(ledPin0, HIGH);
-      
-      break;
-    }
+    digitalWrite(vet[0], HIGH);
+    digitalWrite(vet[1], HIGH);
+    digitalWrite(vet[2], HIGH);
+    digitalWrite(vet[3], HIGH);
+    digitalWrite(vet[4], HIGH);
+  }else if(digitalRead(vet[4])==HIGH)
+        {
+          digitalWrite(vet[0], LOW);
+          digitalWrite(vet[1], LOW);
+          digitalWrite(vet[2], LOW);
+          digitalWrite(vet[3], LOW);
     
-    case 2:
-    {
-      Serial.println("Topo na posicao 2");
-      Serial.println("LED 3 aceso!");
-      
-      digitalWrite(ledPin0, LOW);
-      digitalWrite(ledPin1, LOW);
-      
-      for(int i=0; i<4; i++)
-      {
-        digitalWrite(ledPin2, LOW);
-        delay(100);
-        digitalWrite(ledPin2, HIGH);
-        delay(100);
-      }
-      
-      digitalWrite(ledPin0, HIGH);
-      digitalWrite(ledPin1, HIGH);
-      
-      break;
-    }
-    
-    case 3:
-    {
-      Serial.println("Topo na posicao 3");
-      Serial.println("LED 4 aceso!");
-      
-      digitalWrite(ledPin0, LOW);
-      digitalWrite(ledPin1, LOW);
-      digitalWrite(ledPin2, LOW);
-      
-      for(int i=0; i<4; i++)
-      {
-        digitalWrite(ledPin3, LOW);
-        delay(100);
-        digitalWrite(ledPin3, HIGH);
-        delay(100);
-      }
-      
-      digitalWrite(ledPin0, HIGH);
-      digitalWrite(ledPin1, HIGH);
-      digitalWrite(ledPin2, HIGH);
-      
-      break;
-    }
-    
-    case 4:
-    {
-      Serial.println("Topo na posicao 4");
-      Serial.println("LED 5 aceso!");
-      
-      digitalWrite(ledPin0, LOW);
-      digitalWrite(ledPin1, LOW);
-      digitalWrite(ledPin2, LOW);
-      digitalWrite(ledPin3, LOW);
-      
-      for(int i=0; i<4; i++)
-      {
-        digitalWrite(ledPin4, LOW);
-        delay(100);
-        digitalWrite(ledPin4, HIGH);
-        delay(100);
-      }
-      
-      digitalWrite(ledPin0, HIGH);
-      digitalWrite(ledPin1, HIGH);
-      digitalWrite(ledPin2, HIGH);
-      digitalWrite(ledPin3, HIGH);
-      
-      break;
-    }
-    
-    case 5:
-    {
-      Serial.println("Topo na posicao 5");
-      Serial.println("LED 6 aceso!");
-      
-      digitalWrite(ledPin0, LOW);
-      digitalWrite(ledPin1, LOW);
-      digitalWrite(ledPin2, LOW);
-      digitalWrite(ledPin3, LOW);
-      digitalWrite(ledPin4, LOW);
-      
-      for(int i=0; i<4; i++)
-      {
-        digitalWrite(ledPin5, LOW);
-        delay(100);
-        digitalWrite(ledPin5, HIGH);
-        delay(100);
-      }
-      
-      digitalWrite(ledPin0, HIGH);
-      digitalWrite(ledPin1, HIGH);
-      digitalWrite(ledPin2, HIGH);
-      digitalWrite(ledPin3, HIGH);
-      digitalWrite(ledPin4, HIGH);
-      
-      break;
-    }
-    
-    /*
-      Se a pilha estiver vazia imprime no serial monitor
-      e emite um som com o buzzer
-    */
-    case -1:
-    {
-      Serial.println("Pilha Vazia! Nao ha o que mostrar!");
-      
-      digitalWrite(buzzer, HIGH);
-      delay(500);
-      digitalWrite(buzzer, LOW);
-      
-      break;
-    }
-  }
+          for(int i=0; i<4; i++)
+          {
+             digitalWrite(vet[4], LOW);
+             delay(100);
+             digitalWrite(vet[4], HIGH);
+             delay(100);
+          }
+          
+          digitalWrite(vet[0], HIGH);
+          digitalWrite(vet[1], HIGH);
+          digitalWrite(vet[2], HIGH);
+          digitalWrite(vet[3], HIGH);
+        }else if(digitalRead(vet[3])==HIGH)
+              {
+                digitalWrite(vet[0], LOW);
+                digitalWrite(vet[1], LOW);
+                digitalWrite(vet[2], LOW);
+          
+                for(int i=0; i<4; i++)
+                {
+                   digitalWrite(vet[3], LOW);
+                   delay(100);
+                   digitalWrite(vet[3], HIGH);
+                   delay(100);
+                }
+                
+                digitalWrite(vet[0], HIGH);
+                digitalWrite(vet[1], HIGH);
+                digitalWrite(vet[2], HIGH);
+              }else if(digitalRead(vet[2])==HIGH)
+                    {
+                      digitalWrite(vet[0], LOW);
+                      digitalWrite(vet[1], LOW);
+                      
+                      for(int i=0; i<4; i++)
+                      {
+                         digitalWrite(vet[2], LOW);
+                         delay(100);
+                         digitalWrite(vet[2], HIGH);
+                         delay(100);
+                      }
+                      
+                      digitalWrite(vet[0], HIGH);
+                      digitalWrite(vet[1], HIGH);
+                    }else if(digitalRead(vet[1])==HIGH)
+                          {
+                            digitalWrite(vet[0], LOW);
+                            
+                            for(int i=0; i<4; i++)
+                            {
+                               digitalWrite(vet[1], LOW);
+                               delay(100);
+                               digitalWrite(vet[1], HIGH);
+                               delay(100);
+                            }
+                            
+                            digitalWrite(vet[0], HIGH);
+                          }else if(digitalRead(vet[0])==HIGH)
+                                {
+                                  for(int i=0; i<4; i++)
+                                  {
+                                    digitalWrite(vet[0], LOW);
+                                    delay(100);
+                                    digitalWrite(vet[0], HIGH);
+                                    delay(100);
+                                  }
+                                }else
+                                    {
+                                      Serial.println("===========================================");
+                                      Serial.println("Pilha Vazia! Nao ha o que mostrar!");
+                                      digitalWrite(buzzer, HIGH);  
+                                      delay(500);
+                                      digitalWrite(buzzer, LOW); 
+                                    }
 }
 
 void zera()
 {
-  //Pisca todos os LED's e emite som com o buzzer
   for(int i=0; i<4; i++)
   {
     digitalWrite(buzzer, LOW);
-    digitalWrite(ledPin0, LOW);
-    digitalWrite(ledPin1, LOW);
-    digitalWrite(ledPin2, LOW);
-    digitalWrite(ledPin3, LOW);
-    digitalWrite(ledPin4, LOW);
-    digitalWrite(ledPin5, LOW);
+    digitalWrite(vet[0], LOW);
+    digitalWrite(vet[1], LOW);
+    digitalWrite(vet[2], LOW);
+    digitalWrite(vet[3], LOW);
+    digitalWrite(vet[4], LOW);
+    digitalWrite(vet[5], LOW);
     delay(100);
     digitalWrite(buzzer, HIGH);
-    digitalWrite(ledPin0, HIGH);
-    digitalWrite(ledPin1, HIGH);
-    digitalWrite(ledPin2, HIGH);
-    digitalWrite(ledPin3, HIGH);
-    digitalWrite(ledPin4, HIGH);
-    digitalWrite(ledPin5, HIGH);
+    digitalWrite(vet[0], HIGH);
+    digitalWrite(vet[1], HIGH);
+    digitalWrite(vet[2], HIGH);
+    digitalWrite(vet[3], HIGH);
+    digitalWrite(vet[4], HIGH);
+    digitalWrite(vet[5], HIGH);
     delay(100);
   }
-  
-  //Desliga todos os LED's e o Buzzer
+
   digitalWrite(buzzer, LOW);
-  digitalWrite(ledPin0, LOW);
-  digitalWrite(ledPin1, LOW);
-  digitalWrite(ledPin2, LOW);
-  digitalWrite(ledPin3, LOW);
-  digitalWrite(ledPin4, LOW);
-  digitalWrite(ledPin5, LOW);
-  
-  /*
-    Inicializa a pilha e imprime no serial monitor
-    a mensagem abaixo
-  */
-  topo=-1;
-  
-  Serial.println("Pilha inicializada com sucesso!");
-  Serial.println("=========================================");
+  digitalWrite(vet[0], LOW);
+  digitalWrite(vet[1], LOW);
+  digitalWrite(vet[2], LOW);
+  digitalWrite(vet[3], LOW);
+  digitalWrite(vet[4], LOW);
+  digitalWrite(vet[5], LOW);
+
+  Serial.println("===========================================");
+  Serial.println("Pilha Inicializada!");
 }
