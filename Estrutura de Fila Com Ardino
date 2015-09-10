@@ -1,14 +1,18 @@
+//Definindo pinos dos Botões
 #define btPush 4
 #define btPop 5
 #define btTopo 6
 #define btZera 7
 
+//Criando vetor para armazenar os pinos dos LED's
 int vet[6] = {13, 12, 11, 10, 9, 8};
 
+//Definindo pino do buzzer
 #define buzzer 3
 
 void setup()
 {
+  //Setando pinos dos LED's como saída
   pinMode(vet[0], OUTPUT);
   pinMode(vet[1], OUTPUT);
   pinMode(vet[2], OUTPUT);
@@ -16,6 +20,10 @@ void setup()
   pinMode(vet[4], OUTPUT);
   pinMode(vet[5], OUTPUT);
   
+  /*
+    Garantindo que todos os LED's estaram apagados
+    ao iniciar o programa
+  */
   digitalWrite(vet[0], LOW);
   digitalWrite(vet[1], LOW);
   digitalWrite(vet[2], LOW);
@@ -23,20 +31,27 @@ void setup()
   digitalWrite(vet[4], LOW);
   digitalWrite(vet[5], LOW);
 
+  //Setando pinos dos Botões como saída
   pinMode(btPush, INPUT);
   pinMode(btPop, INPUT);
   pinMode(btTopo, INPUT);
   pinMode(btZera, INPUT);
 
+  //Setando pinos dos LED's como saída
   pinMode(buzzer, OUTPUT);
   
+  /*
+    Garantindo que o buzzer estara desligado
+    ao iniciar o programa
+  */
   digitalWrite(buzzer, LOW);
-  
+  //Iniciando a serial com um bauda rate de 9600
   Serial.begin(9600);
 }
 
 void loop()
 {
+  //Esperando um botão ser pressionado
   if(digitalRead(btPush))
   {
     push();
@@ -53,11 +68,21 @@ void loop()
   {
     zera();
   }
+  
+  /*
+    Delay para garantir que o botão não seja
+    lido mais de uma vez ao ser pressionado
+  */
   delay(100);
 }
 
 void push()
 {
+  /*
+    Verifica LED por LED, e acende o último LED apagado,
+    caso estejam todos acesos o buzzer apita e é exibida
+    na tela a mensagem que a pilha esta cheia
+  */
   if(digitalRead(vet[0])==LOW)
   {
     digitalWrite(vet[0], HIGH);
@@ -101,6 +126,11 @@ void push()
 
 void pop()
 {
+  /*
+    Verifica LED por LED, e apaga o último LED aceso,
+    caso estejam todos apagados o buzzer apita e é exibida
+    na tela a mensagem que a pilha esta vazia
+  */
   if(digitalRead(vet[5])==HIGH)
   {
     digitalWrite(vet[5], LOW);
@@ -143,6 +173,10 @@ void pop()
 
 void top()
 {
+  /*
+    Verifica qual é o último LED aceso, apaga todos os LED's
+    que estão antes desse respectivo LED e pisca o ultimo LED
+  */
   if(digitalRead(vet[5])==HIGH)
   {
     digitalWrite(vet[0], LOW);
@@ -249,6 +283,10 @@ void top()
 
 void zera()
 {
+  /*
+    Pisca todos os LED's o buzzer apita simultaneamente e
+    todos os LED's são apagados
+  */
   for(int i=0; i<4; i++)
   {
     digitalWrite(buzzer, LOW);
